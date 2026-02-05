@@ -79,49 +79,22 @@ Contattami in privato per info e
 <b>PROVA GRATUITA</b>🌐💎 #Streaming #ProvaGratuita
 """
 
-async def invia_messaggio_1():
-    await bot.send_message(chat_id=CHAT_ID, text=MESSAGE)
-
-async def invia_messaggio_2():
-    with open('./postimg.png', 'rb') as img:
-        await bot.send_photo(
-            chat_id=CHAT_ID,
-            photo=img,
-            caption=MESSAGE2,
-            parse_mode='HTML'
-        )
-
-# ---------- MAIN ASYNC ----------
-
 async def main():
-    logging.basicConfig(level=logging.INFO)
+    bot = Bot(token=TOKEN)
 
-    scheduler = AsyncIOScheduler(timezone=pytz.utc)
+    print("Invio messaggio 1...")
+    await bot.send_message(chat_id=CHAT_ID, text=MESSAGE1)
 
-    # Messaggio 1 subito e ogni 14 minuti
-    scheduler.add_job(
-        invia_messaggio_1,
-        trigger='interval',
-        minutes=14,
-        next_run_time=datetime.now(pytz.utc)
+    print("Attendo 5 minuti...")
+    await asyncio.sleep(300)  # 5 minuti
+
+    print("Invio messaggio 2...")
+    await bot.send_message(
+        chat_id=CHAT_ID,
+        text=MESSAGE2,
+        parse_mode="HTML"
     )
 
-    # Messaggio 2 dopo 7 minuti dal primo e poi ogni 14 minuti
-    scheduler.add_job(
-        invia_messaggio_2,
-        trigger='interval',
-        minutes=14,
-        next_run_time=datetime.now(pytz.utc) + timedelta(minutes=7)
-    )
+    print("Fatto! Script terminato.")
 
-    scheduler.start()
-
-    print("🤖 Bot async avviato. Premi CTRL+C per fermare.")
-
-    # Mantieni vivo il loop async
-    await asyncio.Event().wait()
-
-# ---------- ENTRY POINT ----------
-
-if __name__ == '__main__':
-    asyncio.run(main())
+asyncio.run(main())
