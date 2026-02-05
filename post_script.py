@@ -77,22 +77,22 @@ Contattami in privato per info e
 
 async def main():
     bot = Bot(token=TOKEN)
+    minute = datetime.utcnow().minute
 
-    print("Invio messaggio 1...")
-    await bot.send_message(chat_id=CHAT_ID, text=MESSAGE)
-
-    print("Attendo 5 minuti...")
-    await asyncio.sleep(300)  # 5 minuti
-
-    print("Invio messaggio 2...")
-    await bot.send_message(
-        chat_id=CHAT_ID,
-        text=MESSAGE2,
-        parse_mode="HTML"
-    )
+    if minute % 10 < 5:
+        print("Invio messaggio 1...")
+        await bot.send_message(chat_id=CHAT_ID, text=MESSAGE)
+    else:
+        print("Invio messaggio 2...")
+        await bot.send_message(
+            chat_id=CHAT_ID,
+            text=MESSAGE2,
+            parse_mode="HTML"
+        )
 
     print("Fatto! Script terminato.")
 
 asyncio.run(main())
+
 
 
