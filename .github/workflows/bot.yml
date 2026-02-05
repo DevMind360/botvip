@@ -2,8 +2,8 @@ name: Run Telegram Bot
 
 on:
   schedule:
-    - cron: "*/10 * * * *"  # ogni 10 minuti
-  workflow_dispatch:        # permette avvio manuale
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
 
 jobs:
   run-bot:
@@ -19,7 +19,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install python-telegram-bot pytz apscheduler
 
       - name: Run bot
         run: python post_script.py
