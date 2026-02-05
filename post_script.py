@@ -1,0 +1,127 @@
+import asyncio
+import logging
+import pytz
+from datetime import datetime, timedelta
+
+from telegram import Bot
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+TOKEN = "6731563142:AAGIpMoq-6Db3pBFlMwpiGzpvMUG16Zljc4"
+CHAT_ID = "-1001728374742"  # Sostituisci con l'ID del tuo gruppo
+
+bot = Bot(token=TOKEN)
+
+MESSAGE = """
+📺  VIP TV 📺
+🔥🔥🔥TUTTO LO STREAMING E SERVIZI ON DEMAND IN UN SOLO PACCHETTO !!!🔥🔥🔥
+@babbonataleamz
+
+🔥🔥🔥PROVA GRATUTA🔥🔥🔥
+
+PRONTO A DISDIRE TUTTI I TUOI ABBONAMENTI???
+
+👉 Qualità 4K, FULL HD, HD, SD, 
+👉 Server Estero (SICURO)
+👉 1 dispositivo (2/3 su richiesta)
+
+✅ DĪSNĒY PLUS
+✅ NĒTFLĪX 
+🇮🇹 SK¥ PACCHETTO FULL 
+🌍 SK¥ PACCHETTO FULL ESTERI 
+⚽️ DĀZN
+⚽️ CHAMPIONS LEAGUE
+📺 MEDĪASET PRĒMIUM FULL HD,HD,SD,+1
+📡Tutti i Canali TV SAT
+🏍 MOTO GP ON BOARD 
+🏎 FORMULA 1 ON BOARD| CAMERA CAM
+🔞 CANALI  HOTCLUB E ON DEMAND
+🎥 PRIMAFILA LIVE FULL HD
+👉 PRIMAFILA 
+👉 CANALI TEMATICI
+👉 EAGLE ITALIA
+⚽️ SPORT/CALCIO/DĀZN/LEGAPRO  💎EUROPEI/MONDIALI💎
+👉 ELEVEN SPORT
+👉 MYSPORT
+👉 SPORT INTERNAZIONALI
+🖥 FULL HD, HD, SD, +1
+
+💎 CONTATATEMI IN PRIVATO PER I PREZZI 
+➖➖➖➖➖➖➖➖➖
+@babbonataleamz
+✅ Compatibilità con:
+📱Android      📺SmartTV 
+📱IOS              🖲BoxTV/FireStick
+💻PC/MAC     📽ENIGMA2    
+
+🏧 PAGAMENTI SICURI:
+💳 Carta
+🅿️ PayPal
+🅱️ Bitcoin 
+
+@babbonataleamz
+
+✅ Abbiamo prezzi bomba!!✅ 
+@babbonataleamz
+
+✅Contattami per qualsisi informazione o se desideri provare gratuitamente !! ✅
+"""
+
+MESSAGE2 = """
+⭐️ <b>VIP TV</b>⭐️
+Vivi l’esperienza di <b>STREAMING</b> definitiva con la nostra <b>PROVA GRATUITA</b> disponibile ora! ✅
+
+🔥PROVA subito il nostro <b>PACCHETTO COMPLETO</b>🔥Dīsnēy Plus, Nētflīx, SK¥, DĀZN, e tanto altro! 
+
+ABBIAMO I <b>PREZZI PIU' BASSI</b> SUL MERCATO CON UNA QUALITA' IMPECCABILE!!!
+
+@babbonataleamz
+Contattami in privato per info e 
+<b>PROVA GRATUITA</b>🌐💎 #Streaming #ProvaGratuita
+"""
+
+async def invia_messaggio_1():
+    await bot.send_message(chat_id=CHAT_ID, text=MESSAGE)
+
+async def invia_messaggio_2():
+    with open('./postimg.png', 'rb') as img:
+        await bot.send_photo(
+            chat_id=CHAT_ID,
+            photo=img,
+            caption=MESSAGE2,
+            parse_mode='HTML'
+        )
+
+# ---------- MAIN ASYNC ----------
+
+async def main():
+    logging.basicConfig(level=logging.INFO)
+
+    scheduler = AsyncIOScheduler(timezone=pytz.utc)
+
+    # Messaggio 1 subito e ogni 14 minuti
+    scheduler.add_job(
+        invia_messaggio_1,
+        trigger='interval',
+        minutes=14,
+        next_run_time=datetime.now(pytz.utc)
+    )
+
+    # Messaggio 2 dopo 7 minuti dal primo e poi ogni 14 minuti
+    scheduler.add_job(
+        invia_messaggio_2,
+        trigger='interval',
+        minutes=14,
+        next_run_time=datetime.now(pytz.utc) + timedelta(minutes=7)
+    )
+
+    scheduler.start()
+
+    print("🤖 Bot async avviato. Premi CTRL+C per fermare.")
+
+    # Mantieni vivo il loop async
+    await asyncio.Event().wait()
+
+# ---------- ENTRY POINT ----------
+
+if __name__ == '__main__':
+    asyncio.run(main())
