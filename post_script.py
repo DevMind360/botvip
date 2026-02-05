@@ -1,6 +1,7 @@
 import os
 import asyncio
 from telegram import Bot
+from datetime import datetime
 
 TOKEN = "6731563142:AAGIpMoq-6Db3pBFlMwpiGzpvMUG16Zljc4"
 CHAT_ID = "-1001728374742"  # Sostituisci con l'ID del tuo gruppo
@@ -93,6 +94,7 @@ async def main():
     print("Fatto! Script terminato.")
 
 asyncio.run(main())
+
 
 
 
