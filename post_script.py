@@ -1,10 +1,6 @@
+import os
 import asyncio
-import logging
-import pytz
-from datetime import datetime, timedelta
-
 from telegram import Bot
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 TOKEN = "6731563142:AAGIpMoq-6Db3pBFlMwpiGzpvMUG16Zljc4"
 CHAT_ID = "-1001728374742"  # Sostituisci con l'ID del tuo gruppo
@@ -98,3 +94,4 @@ async def main():
     print("Fatto! Script terminato.")
 
 asyncio.run(main())
+
