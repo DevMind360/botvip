@@ -80,7 +80,7 @@ async def main():
     bot = Bot(token=TOKEN)
     minute = datetime.utcnow().minute
 
-    if minute % 10 < 5:
+    if (minute // 5) % 2 == 0:
         print("Invio messaggio 1...")
         await bot.send_message(chat_id=CHAT_ID, text=MESSAGE)
     else:
@@ -94,6 +94,7 @@ async def main():
     print("Fatto! Script terminato.")
 
 asyncio.run(main())
+
 
 
 
