@@ -79,7 +79,7 @@ async def main():
     bot = Bot(token=TOKEN)
 
     print("Invio messaggio 1...")
-    await bot.send_message(chat_id=CHAT_ID, text=MESSAGE1)
+    await bot.send_message(chat_id=CHAT_ID, text=MESSAGE)
 
     print("Attendo 5 minuti...")
     await asyncio.sleep(300)  # 5 minuti
@@ -94,4 +94,5 @@ async def main():
     print("Fatto! Script terminato.")
 
 asyncio.run(main())
+
 
