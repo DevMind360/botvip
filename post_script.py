@@ -85,15 +85,18 @@ async def main():
         await bot.send_message(chat_id=CHAT_ID, text=MESSAGE)
     else:
         print("Invio messaggio 2...")
-        await bot.send_message(
+        await with open('./postimg.png', 'rb') as img:
+        await bot.send_photo(
             chat_id=CHAT_ID,
-            text=MESSAGE2,
-            parse_mode="HTML"
+            photo=img,
+            caption=MESSAGE2,
+            parse_mode='HTML'
         )
 
     print("Fatto! Script terminato.")
 
 asyncio.run(main())
+
 
 
 
